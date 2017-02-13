@@ -15,8 +15,8 @@ import java.util.Random;
 
 public class Sprite {
     int [] DIRECTION_TO_ANIMATION_MAP = {3, 1, 0, 2};
-    private static final int BMP_ROWS = 5;
-    private static final int BMP_COLUMNS = 7;
+    private static final int BMP_ROWS = 4;
+    private static final int BMP_COLUMNS = 3;
     private int x = 0;
     private int y = 0;
     private int xSpeed = 5;
@@ -26,6 +26,7 @@ public class Sprite {
     private int width;
     private int height;
     private int ySpeed;
+    private static final int MAX_SPEED = 5;
 
     public Sprite(VistaJuego vistaJuego,Bitmap bmp) {
         this.vistaJuego = vistaJuego;
@@ -33,8 +34,11 @@ public class Sprite {
         this.width = bmp.getWidth() / BMP_COLUMNS;
         this.height = bmp.getHeight() / BMP_ROWS;
         Random rnd = new Random(System.currentTimeMillis());
-        xSpeed = rnd.nextInt(10) - 5;
-        ySpeed = rnd.nextInt(10) - 5;
+        x = rnd.nextInt(vistaJuego.getWidth() - width);
+        y = rnd.nextInt(vistaJuego.getHeight() - height);
+        xSpeed = rnd.nextInt(MAX_SPEED * 2) - MAX_SPEED;
+        ySpeed = rnd.nextInt(MAX_SPEED * 2) - MAX_SPEED;
+
     }
 
     private void update(){

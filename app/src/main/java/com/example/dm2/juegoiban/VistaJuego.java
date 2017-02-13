@@ -9,13 +9,17 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class VistaJuego extends SurfaceView {
-        private Bitmap bmp;
-        private SurfaceHolder holder;
-        private GameLoopThread gameLoopThread;
-        private int x = 0;
-        private int xSpeed=1;
-        private Sprite sprite;
+    private Bitmap bmp;
+    private SurfaceHolder holder;
+    private GameLoopThread gameLoopThread;
+    private int x = 0;
+    private int xSpeed=1;
+    //private Sprite sprite;
+    private List<Sprite> sprites = new ArrayList<Sprite>();
 
 
     public VistaJuego(Context context) {
@@ -26,6 +30,12 @@ public class VistaJuego extends SurfaceView {
 
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
+                sprites.add(createSprite(R.drawable.elfo));
+                sprites.add(createSprite(R.drawable.persona));
+                sprites.add(createSprite(R.drawable.elfo));
+                sprites.add(createSprite(R.drawable.persona));
+
+
                 gameLoopThread.setRunning(true);
                 gameLoopThread.start();
             }
@@ -49,8 +59,13 @@ public class VistaJuego extends SurfaceView {
                 }
             }
         });
-        bmp = BitmapFactory.decodeResource(getResources(), R.drawable.skeleton);
-        sprite = new Sprite(this, bmp);
+        /*bmp = BitmapFactory.decodeResource(getResources(), R.drawable.skeleton);
+        sprite = new Sprite(this, bmp);*/
+    }
+
+    private Sprite createSprite(int resouce) {
+        bmp = BitmapFactory.decodeResource(getResources(),resouce);
+        return new Sprite(this, bmp);
     }
 
     @Override
@@ -67,10 +82,13 @@ public class VistaJuego extends SurfaceView {
         }
         x = x + xSpeed;
         canvas.drawBitmap(bmp, x, 10, null);*/
-        sprite.onDraw(canvas);
+        for(Sprite sprite: sprites)
+        {
+            sprite.onDraw(canvas);
+        }
+
 
     }
 
 }
-
 
