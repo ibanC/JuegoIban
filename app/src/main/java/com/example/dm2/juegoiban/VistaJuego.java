@@ -111,7 +111,7 @@ public class VistaJuego extends SurfaceView {
             //SI ACABO LA PARTIDA VOY AL MENU PRINCIPAL DIRECTAMENTE
             gameLoopThread.setRunning(false);
             Intent intent = new Intent(this.getContext(), MainActivity.class);
-            //intent.putExtra("Puntuacion", score+"");
+            intent.putExtra("Terminado","Juego Terminado");
             this.getContext().startActivity(intent);
         }
         if (System.currentTimeMillis() - lastClick > 300) {
