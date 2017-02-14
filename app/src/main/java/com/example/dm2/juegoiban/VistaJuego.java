@@ -25,6 +25,7 @@ public class VistaJuego extends SurfaceView {
     private List<TempSprite> temps = new ArrayList<TempSprite>();
     private long lastClick;
     private Bitmap bmpBlood;
+    private boolean gameOver = false;
 
     public VistaJuego(Context context) {
         super(context);
@@ -34,10 +35,13 @@ public class VistaJuego extends SurfaceView {
 
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
-                sprites.add(createSprite(R.drawable.elfo));
-                sprites.add(createSprite(R.drawable.persona));
-                sprites.add(createSprite(R.drawable.elfo));
-                sprites.add(createSprite(R.drawable.persona));
+                sprites.add(createSprite(R.drawable.android));
+                sprites.add(createSprite(R.drawable.android));
+                sprites.add(createSprite(R.drawable.android));
+                sprites.add(createSprite(R.drawable.android));
+               // sprites.add(createSprite(R.drawable.persona));
+                //sprites.add(createSprite(R.drawable.prueba));
+               // sprites.add(createSprite(R.drawable.persona));
 
 
 
@@ -88,7 +92,7 @@ public class VistaJuego extends SurfaceView {
         }
         x = x + xSpeed;
         canvas.drawBitmap(bmp, x, 10, null);*/
-        for(Sprite sprite: sprites)
+        for(Sprite sprite:sprites)
         {
             sprite.onDraw(canvas);
         }
@@ -102,6 +106,14 @@ public class VistaJuego extends SurfaceView {
     public boolean onTouchEvent(MotionEvent event) {
 
 
+        if (gameOver) {
+
+            //SI ACABO LA PARTIDA VOY AL MENU PRINCIPAL DIRECTAMENTE
+            gameLoopThread.setRunning(false);
+            Intent intent = new Intent(this.getContext(), MainActivity.class);
+            //intent.putExtra("Puntuacion", score+"");
+            this.getContext().startActivity(intent);
+        }
         if (System.currentTimeMillis() - lastClick > 300) {
             lastClick = System.currentTimeMillis();
             float x = event.getX();
@@ -111,9 +123,13 @@ public class VistaJuego extends SurfaceView {
                 for (int i = sprites.size() - 1; i >= 0; i--) {
                     Sprite sprite = sprites.get(i);
 
-                    if (sprite.isCollition(x ,y )) {
+                    if (sprite.isCollition(event.getX(), event.getY())) {
                         sprites.remove(sprite);
                         temps.add(new TempSprite(temps, this, x, y, bmpBlood));
+
+                        if (i==0){
+                            gameOver= true;
+                        }
                         break;
                     }
                 }

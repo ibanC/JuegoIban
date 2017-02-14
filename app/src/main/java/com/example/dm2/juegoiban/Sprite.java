@@ -15,11 +15,11 @@ import java.util.Random;
 
 public class Sprite {
     int [] DIRECTION_TO_ANIMATION_MAP = {3, 1, 0, 2};
-    private static final int BMP_ROWS = 4;
-    private static final int BMP_COLUMNS = 3;
+    private static final int BMP_ROWS = 3;
+    private static final int BMP_COLUMNS = 10;
     private int x = 0;
     private int y = 0;
-    private int xSpeed = 5;
+    private int xSpeed;
     private VistaJuego vistaJuego;
     private Bitmap bmp;
     private int currentFrame = 0;
